@@ -1,4 +1,4 @@
 [core]
     remote = myremote
 ['remote "myremote"']
-    url = C:\Users\prana\Desktop
+    url = s3://ytsentimentbucketpsg
