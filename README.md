@@ -1,4 +1,4 @@
-yt
+YOUTUBE-COMMENT-SENTIMENT-ANALYSIS
 ==============================
 
 A streamlit application to detect youtube Comments sentiments

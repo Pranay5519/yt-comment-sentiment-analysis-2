@@ -1,0 +1,7 @@
+cookiecutter
+
+git init , remote add  commit push [done]
+
+dvc init , dvc remote setup [done]
+
+created file dvc.yaml , params.yaml --> thats all
