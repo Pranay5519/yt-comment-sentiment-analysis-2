@@ -162,10 +162,11 @@ def main():
 
         mlflow.lightgbm.log_model(
             model,
-            name="lgbm_model",
+            name="model-light-gbm",
             signature=signature,
             input_example=input_example,
-            registered_model_name="ligbm_model_v1"
+            artifact_path="light_gbm" 
+            #registered_model_name="ligbm_model_v1"
         )
 
         save_model_info(run.info.run_id, "lgbm_model", "experiment_info.json")
