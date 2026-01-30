@@ -162,7 +162,7 @@ def main():
 
         mlflow.lightgbm.log_model(
             model,
-            name="model-light-gbm",
+            #name="model-light-gbm",
             signature=signature,
             input_example=input_example,
             artifact_path="light_gbm" 
@@ -170,7 +170,7 @@ def main():
         )
 
         save_model_info(run.info.run_id, "lgbm_model", "experiment_info.json")
-
+        
         mlflow.log_artifact(
             local_path=os.path.join(root_dir, "tfidf_vectorizer.pkl")
         )
