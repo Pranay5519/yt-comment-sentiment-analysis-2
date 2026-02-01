@@ -185,7 +185,7 @@ python-dotenv==1.2.1
     # via mlflow-skinny
 pytz==2025.2
     # via pandas
-pywin32==311
+pywin32==311 ; platform_system == "Windows"
     # via docker
 pyyaml==6.0.3
     # via mlflow-skinny
