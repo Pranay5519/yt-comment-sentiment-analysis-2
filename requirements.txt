@@ -4,39 +4,95 @@
 #
 #    pip-compile requirements.in
 #
+aiohappyeyeballs==2.6.1
+    # via aiohttp
+aiohttp==3.13.3
+    # via
+    #   aiohttp-retry
+    #   fsspec
+aiohttp-retry==2.9.1
+    # via
+    #   dvc-http
+    #   scmrepo
+aiosignal==1.4.0
+    # via aiohttp
 alembic==1.18.3
     # via mlflow
+amqp==5.3.1
+    # via kombu
 annotated-doc==0.0.4
     # via fastapi
 annotated-types==0.7.0
     # via pydantic
+antlr4-python3-runtime==4.9.3
+    # via
+    #   hydra-core
+    #   omegaconf
 anyio==4.12.1
     # via starlette
+appdirs==1.4.4
+    # via iterative-telemetry
+asyncssh==2.22.0
+    # via scmrepo
+atpublic==7.0.0
+    # via flufl-lock
+attrs==25.4.0
+    # via
+    #   aiohttp
+    #   dvc
+    #   dvc-data
+    #   sqltrie
+billiard==4.2.4
+    # via celery
 blinker==1.9.0
     # via flask
 cachetools==6.2.6
     # via
     #   mlflow-skinny
     #   mlflow-tracing
+celery==5.6.2
+    # via
+    #   dvc
+    #   dvc-task
 certifi==2026.1.4
     # via requests
 cffi==2.0.0
-    # via cryptography
+    # via
+    #   cryptography
+    #   pygit2
 charset-normalizer==3.4.4
     # via requests
 click==8.3.1
     # via
+    #   celery
+    #   click-didyoumean
+    #   click-plugins
+    #   click-repl
     #   flask
     #   mlflow-skinny
+    #   nltk
+    #   typer
     #   uvicorn
+click-didyoumean==0.3.1
+    # via celery
+click-plugins==1.1.1.2
+    # via celery
+click-repl==0.3.0
+    # via celery
 cloudpickle==3.1.2
     # via mlflow-skinny
 colorama==0.4.6
-    # via click
+    # via
+    #   click
+    #   dvc
+    #   tqdm
+configobj==5.0.9
+    # via dvc
 contourpy==1.3.3
     # via matplotlib
 cryptography==46.0.4
     # via
+    #   asyncssh
     #   google-auth
     #   mlflow
 cycler==0.12.1
@@ -45,27 +101,88 @@ databricks-sdk==0.82.0
     # via
     #   mlflow-skinny
     #   mlflow-tracing
+dictdiffer==0.9.0
+    # via dvc-data
+diskcache==5.6.3
+    # via dvc-data
+distro==1.9.0
+    # via
+    #   dvc
+    #   iterative-telemetry
 docker==7.1.0
     # via mlflow
+dpath==2.2.0
+    # via dvc
+dulwich==1.0.0
+    # via
+    #   dvc
+    #   dvc-studio-client
+    #   scmrepo
+dvc==3.66.1
+    # via -r requirements.in
+dvc-data==3.18.2
+    # via dvc
+dvc-http==2.32.0
+    # via dvc
+dvc-objects==5.2.0
+    # via
+    #   dvc
+    #   dvc-data
+dvc-render==1.0.2
+    # via dvc
+dvc-studio-client==0.22.0
+    # via dvc
+dvc-task==0.40.2
+    # via dvc
+entrypoints==0.4
+    # via gto
 fastapi==0.128.0
     # via
     #   -r requirements.in
     #   mlflow-skinny
-dvc[http]
+filelock==3.20.3
+    # via iterative-telemetry
 flask==3.1.2
     # via
     #   flask-cors
     #   mlflow
 flask-cors==6.0.2
     # via mlflow
+flatten-dict==0.4.2
+    # via dvc
+flufl-lock==9.0.0
+    # via dvc
 fonttools==4.61.1
     # via matplotlib
+frozenlist==1.8.0
+    # via
+    #   aiohttp
+    #   aiosignal
+fsspec[http,tqdm]==2026.1.0
+    # via
+    #   dvc
+    #   dvc-data
+    #   dvc-http
+    #   dvc-objects
+    #   scmrepo
+funcy==2.0
+    # via
+    #   dvc
+    #   dvc-data
+    #   dvc-objects
+    #   dvc-task
+    #   gto
+    #   scmrepo
 gitdb==4.0.12
     # via gitpython
 gitpython==3.1.46
-    # via mlflow-skinny
+    # via
+    #   mlflow-skinny
+    #   scmrepo
 google-auth==2.48.0
     # via databricks-sdk
+grandalf==0.8
+    # via dvc
 graphene==3.4.3
     # via mlflow
 graphql-core==3.2.7
@@ -76,28 +193,46 @@ graphql-relay==3.2.0
     # via graphene
 greenlet==3.3.1
     # via sqlalchemy
+gto==1.9.0
+    # via dvc
 h11==0.16.0
     # via uvicorn
 huey==2.6.0
     # via mlflow
+hydra-core==1.3.2
+    # via dvc
 idna==3.11
     # via
     #   anyio
     #   requests
+    #   yarl
 importlib-metadata==8.7.1
     # via
     #   mlflow-skinny
     #   opentelemetry-api
+iterative-telemetry==0.0.10
+    # via dvc
 itsdangerous==2.2.0
     # via flask
 jinja2==3.1.6
     # via flask
 joblib==1.5.3
-    # via scikit-learn
+    # via
+    #   nltk
+    #   scikit-learn
 kiwisolver==1.4.9
     # via matplotlib
+kombu==5.6.2
+    # via
+    #   celery
+    #   dvc
+    #   dvc-task
+lightgbm==4.6.0
+    # via -r requirements.in
 mako==1.3.10
     # via alembic
+markdown-it-py==4.0.0
+    # via rich
 markupsafe==3.0.3
     # via
     #   flask
@@ -106,22 +241,37 @@ markupsafe==3.0.3
     #   werkzeug
 matplotlib==3.10.8
     # via mlflow
+mdurl==0.1.2
+    # via markdown-it-py
 mlflow==3.9.0
     # via -r requirements.in
 mlflow-skinny==3.9.0
     # via mlflow
 mlflow-tracing==3.9.0
     # via mlflow
+multidict==6.7.1
+    # via
+    #   aiohttp
+    #   yarl
+networkx==3.6.1
+    # via dvc
+nltk==3.9.2
+    # via -r requirements.in
 numpy==2.4.2
     # via
     #   -r requirements.in
     #   contourpy
+    #   lightgbm
     #   matplotlib
     #   mlflow
     #   pandas
     #   scikit-learn
     #   scipy
     #   skops
+omegaconf==2.3.0
+    # via
+    #   dvc
+    #   hydra-core
 opentelemetry-api==1.39.1
     # via
     #   mlflow-skinny
@@ -138,8 +288,15 @@ opentelemetry-sdk==1.39.1
     #   mlflow-tracing
 opentelemetry-semantic-conventions==0.60b1
     # via opentelemetry-sdk
+orjson==3.11.7
+    # via
+    #   dvc-data
+    #   sqltrie
 packaging==25.0
     # via
+    #   dvc
+    #   hydra-core
+    #   kombu
     #   matplotlib
     #   mlflow-skinny
     #   mlflow-tracing
@@ -148,16 +305,32 @@ pandas==2.3.3
     # via
     #   -r requirements.in
     #   mlflow
+pathspec==0.12.1
+    # via
+    #   dvc
+    #   scmrepo
 pillow==12.1.0
     # via matplotlib
+platformdirs==4.5.1
+    # via dvc
 prettytable==3.17.0
     # via skops
+prompt-toolkit==3.0.52
+    # via click-repl
+propcache==0.4.1
+    # via
+    #   aiohttp
+    #   yarl
 protobuf==6.33.5
     # via
     #   databricks-sdk
     #   mlflow-skinny
     #   mlflow-tracing
     #   opentelemetry-proto
+psutil==7.2.2
+    # via
+    #   dvc
+    #   flufl-lock
 pyarrow==22.0.0
     # via mlflow
 pyasn1==0.6.2
@@ -171,32 +344,73 @@ pycparser==3.0
 pydantic==2.12.5
     # via
     #   fastapi
+    #   gto
     #   mlflow-skinny
     #   mlflow-tracing
+    #   pydantic-settings
 pydantic-core==2.41.5
     # via pydantic
+pydantic-settings==2.12.0
+    # via gto
+pydot==4.0.1
+    # via dvc
+pygit2==1.19.1
+    # via scmrepo
+pygments==2.19.2
+    # via rich
+pygtrie==2.5.0
+    # via
+    #   dvc
+    #   dvc-data
+    #   scmrepo
+    #   sqltrie
 pyparsing==3.3.2
-    # via matplotlib
+    # via
+    #   dvc
+    #   grandalf
+    #   matplotlib
+    #   pydot
 python-dateutil==2.9.0.post0
     # via
+    #   celery
     #   graphene
     #   matplotlib
     #   pandas
 python-dotenv==1.2.1
-    # via mlflow-skinny
+    # via
+    #   mlflow-skinny
+    #   pydantic-settings
 pytz==2025.2
     # via pandas
-pywin32==311 ; platform_system == "Windows"
-    # via docker
+pywin32==311
+    # via
+    #   docker
+    #   dvc-task
 pyyaml==6.0.3
-    # via mlflow-skinny
+    # via
+    #   mlflow-skinny
+    #   omegaconf
+regex==2026.1.15
+    # via nltk
 requests==2.32.5
     # via
     #   databricks-sdk
     #   docker
+    #   dvc
+    #   dvc-studio-client
+    #   iterative-telemetry
     #   mlflow-skinny
+rich==14.3.2
+    # via
+    #   dvc
+    #   gto
+    #   typer
 rsa==4.9.1
     # via google-auth
+ruamel-yaml==0.19.1
+    # via
+    #   dvc
+    #   gto
 scikit-learn==1.8.0
     # via
     #   -r requirements.in
@@ -204,11 +418,28 @@ scikit-learn==1.8.0
     #   skops
 scipy==1.17.0
     # via
+    #   lightgbm
     #   mlflow
     #   scikit-learn
     #   skops
+scmrepo==3.6.1
+    # via
+    #   dvc
+    #   gto
+semver==3.0.4
+    # via gto
+shellingham==1.5.4
+    # via typer
+shortuuid==1.0.13
+    # via
+    #   dvc
+    #   dvc-task
+shtab==1.8.0
+    # via dvc
 six==1.17.0
-    # via python-dateutil
+    # via
+    #   flatten-dict
+    #   python-dateutil
 skops==0.13.0
     # via mlflow
 smmap==5.0.2
@@ -219,14 +450,34 @@ sqlalchemy==2.0.46
     #   mlflow
 sqlparse==0.5.5
     # via mlflow-skinny
+sqltrie==0.11.2
+    # via dvc-data
 starlette==0.50.0
     # via fastapi
+tabulate==0.9.0
+    # via
+    #   dvc
+    #   gto
 threadpoolctl==3.6.0
     # via scikit-learn
+tomlkit==0.14.0
+    # via dvc
+tqdm==4.67.2
+    # via
+    #   dvc
+    #   dvc-data
+    #   fsspec
+    #   nltk
+    #   scmrepo
+typer==0.21.1
+    # via gto
 typing-extensions==4.15.0
     # via
+    #   aiosignal
     #   alembic
     #   anyio
+    #   asyncssh
+    #   dulwich
     #   fastapi
     #   graphene
     #   mlflow-skinny
@@ -237,24 +488,51 @@ typing-extensions==4.15.0
     #   pydantic-core
     #   sqlalchemy
     #   starlette
+    #   typer
     #   typing-inspection
 typing-inspection==0.4.2
-    # via pydantic
+    # via
+    #   pydantic
+    #   pydantic-settings
 tzdata==2025.3
-    # via pandas
+    # via
+    #   kombu
+    #   pandas
+    #   tzlocal
+tzlocal==5.3.1
+    # via celery
 urllib3==2.6.3
     # via
     #   docker
+    #   dulwich
     #   requests
 uvicorn==0.40.0
     # via mlflow-skinny
+vine==5.1.0
+    # via
+    #   amqp
+    #   celery
+    #   kombu
+voluptuous==0.16.0
+    # via
+    #   dvc
+    #   dvc-studio-client
 waitress==3.0.2
     # via mlflow
 wcwidth==0.5.3
-    # via prettytable
+    # via
+    #   prettytable
+    #   prompt-toolkit
 werkzeug==3.1.5
     # via
     #   flask
     #   flask-cors
+yarl==1.22.0
+    # via aiohttp
+zc-lockfile==4.0
+    # via dvc
 zipp==3.23.0
     # via importlib-metadata
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
