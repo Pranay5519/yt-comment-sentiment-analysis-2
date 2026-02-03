@@ -6,3 +6,7 @@ mlflow
 nltk
 dvc
 lightgbm
+matplotlib
+seaborn
+wordcloud 
+#; platform_system == "Windows"

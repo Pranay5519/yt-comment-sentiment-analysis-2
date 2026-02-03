@@ -240,7 +240,11 @@ markupsafe==3.0.3
     #   mako
     #   werkzeug
 matplotlib==3.10.8
-    # via mlflow
+    # via
+    #   -r requirements.in
+    #   mlflow
+    #   seaborn
+    #   wordcloud
 mdurl==0.1.2
     # via markdown-it-py
 mlflow==3.9.0
@@ -267,7 +271,9 @@ numpy==2.4.2
     #   pandas
     #   scikit-learn
     #   scipy
+    #   seaborn
     #   skops
+    #   wordcloud
 omegaconf==2.3.0
     # via
     #   dvc
@@ -305,12 +311,15 @@ pandas==2.3.3
     # via
     #   -r requirements.in
     #   mlflow
+    #   seaborn
 pathspec==0.12.1
     # via
     #   dvc
     #   scmrepo
 pillow==12.1.0
-    # via matplotlib
+    # via
+    #   matplotlib
+    #   wordcloud
 platformdirs==4.5.1
     # via dvc
 prettytable==3.17.0
@@ -426,6 +435,8 @@ scmrepo==3.6.1
     # via
     #   dvc
     #   gto
+seaborn==0.13.2
+    # via -r requirements.in
 semver==3.0.4
     # via gto
 shellingham==1.5.4
@@ -527,6 +538,8 @@ werkzeug==3.1.5
     # via
     #   flask
     #   flask-cors
+wordcloud==1.9.6
+    # via -r requirements.in
 yarl==1.22.0
     # via aiohttp
 zc-lockfile==4.0
