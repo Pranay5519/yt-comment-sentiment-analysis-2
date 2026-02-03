@@ -239,7 +239,7 @@ def predict(comments: PredictRequest):
         for comment, sentiment in zip(comments.comments, predictions)
     ]
 
-    return response
+    return response # also return prediction for streamlit 
 # -------------------------
 # /predict_with_timestamps
 # -------------------------
