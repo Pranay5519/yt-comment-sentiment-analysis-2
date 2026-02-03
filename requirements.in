@@ -9,4 +9,6 @@ lightgbm
 matplotlib
 seaborn
 wordcloud 
+dvc-s3
+#dagshub
 #; platform_system == "Windows"
