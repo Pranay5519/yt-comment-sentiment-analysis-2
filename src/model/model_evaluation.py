@@ -165,7 +165,7 @@ def main():
             #name="model-light-gbm",
             signature=signature,
             input_example=input_example,
-            artifact_path="light_gbm" 
+            name="light_gbm" 
             #registered_model_name="ligbm_model_v1"
         )
 
