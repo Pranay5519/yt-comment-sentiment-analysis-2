@@ -87,7 +87,7 @@ def main():
         model_info_path = r'D:\yt-comment-sentiment-analysis2\experiment_info.json'
         model_info = load_model_info(model_info_path)
         
-        model_name = "LightGBM-3.0"
+        model_name = "ligbm_model_v1"
         register_logged_model(model_name, model_info)
     except Exception as e:
         logger.error('Failed to complete the model registration process: %s', e)
