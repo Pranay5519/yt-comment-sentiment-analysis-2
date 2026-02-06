@@ -15,7 +15,7 @@ os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 mlflow.set_tracking_uri("https://dagshub.com/Pranay5519/yt-comment-sentiment-analysis-2.mlflow")
 
 @pytest.mark.parametrize("model_name, alias", [
-    ("ligbm_model_v1", "production"),
+    ("LIGHT_GBM_MODEL", "staging"),
 ])
 def test_load_latest_staging_model(model_name, alias):
     client = MlflowClient()

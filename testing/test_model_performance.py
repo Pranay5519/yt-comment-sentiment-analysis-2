@@ -8,7 +8,7 @@ import mlflow
 mlflow.set_tracking_uri("https://dagshub.com/Pranay5519/yt-comment-sentiment-analysis-2.mlflow")
 
 @pytest.mark.parametrize("model_name, alias, holdout_data_path, vectorizer_path", [
-    ("ligbm_model_v1", "staging", "data/interim/test_processed.csv", "tfidf_vectorizer.pkl"),  # Replace with your actual paths
+    ("LIGHT_GBM_MODEL", "staging", "data/interim/test_processed.csv", "tfidf_vectorizer.pkl"),  # Replace with your actual paths
 ])
 def test_model_performance(model_name, alias, holdout_data_path, vectorizer_path):
     try:
