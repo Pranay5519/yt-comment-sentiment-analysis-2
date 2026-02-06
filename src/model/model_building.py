@@ -108,7 +108,7 @@ def train_lgbm(X_train: np.ndarray, y_train: np.ndarray, learning_rate: float, m
 
 
 def save_model(model, file_path: str) -> None:
-    """Save the trained model to a file."""
+    """Save  the trained model to a file."""
     try:
         with open(file_path, 'wb') as file:
             pickle.dump(model, file)
