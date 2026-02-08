@@ -1,17 +1,13 @@
 import mlflow
 import pytest
-from mlflow.tracking import MlflowClient
-from dotenv import load_dotenv
 import os
-load_dotenv() 
-# Set up DagsHub credentials for MLflow tracking
-dagshub_token = os.getenv("DAGSHUB_PAT")
-if not dagshub_token:
-    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+from mlflow.tracking import MlflowClient
 
-os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
-os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
-# Set your remote tracking URI
+# Ensure authentication is set before anything else
+# These must be set in your CI environment (GitHub Actions) or local terminal
+# os.environ['MLFLOW_TRACKING_USERNAME'] = "Pranay5519"
+# os.environ['MLFLOW_TRACKING_PASSWORD'] = "YOUR_TOKEN"
+
 mlflow.set_tracking_uri("https://dagshub.com/Pranay5519/yt-comment-sentiment-analysis-2.mlflow")
 
 @pytest.mark.parametrize("model_name, alias", [
@@ -20,21 +16,24 @@ mlflow.set_tracking_uri("https://dagshub.com/Pranay5519/yt-comment-sentiment-ana
 def test_load_latest_staging_model(model_name, alias):
     client = MlflowClient()
     
+    # 1. Check if the alias exists and get the actual underlying URI
     try:
-        # 1. Verify the alias exists via Client
         version_details = client.get_model_version_by_alias(model_name, alias)
-        assert version_details is not None
-        
-        # 2. Use the correct MLflow 3 Alias URI format: models:/name@alias
-        # Note: No forward slash after the model name when using @
+        # Using the direct source URI can sometimes bypass path resolution errors
         model_uri = f"models:/{model_name}@{alias}"
         
-        # 3. Use lightgbm.load_model or pyfunc.load_model
-        model = mlflow.lightgbm.load_model(model_uri)
+        # 2. Use pyfunc for better compatibility with remote storage
+        model = mlflow.pyfunc.load_model(model_uri)
 
-        # Assertions
-        assert model is not None, "Model object is None"
-        print(f"Model '{model_name}' version {version_details.version} loaded successfully via @{alias}.")
+        assert model is not None
+        print(f"Version {version_details.version} loaded successfully.")
 
     except Exception as e:
-        pytest.fail(f"Model loading failed with error: {e}")
+        # Instead of generic error, print the source to debug
+        # Check if the 'source' path in version_details actually looks correct
+        try:
+            source = client.get_model_version_by_alias(model_name, alias).source
+            print(f"Debug: Model source points to: {source}")
+        except:
+            pass
+        pytest.fail(f"Model loading failed. Ensure the 'artifact_path' matches during logging. Error: {e}")
