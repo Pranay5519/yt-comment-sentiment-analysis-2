@@ -125,7 +125,7 @@ test_data = load_data(
 
 dataset = mlflow.data.from_pandas(test_data, name="evaluation_set")
 # --------------------------------------------------------
-
+print(root_dir)
 
 def main():
     logger.info("Starting MLflow evaluation run")
@@ -165,8 +165,9 @@ def main():
             #name="model-light-gbm",
             signature=signature,
             input_example=input_example,
-            name="light_gbm"
-           # registered_model_name="ligbm_model_v1"
+            name="light_gbm",
+            #name="light_gbm"
+            registered_model_name="light_gbm_model"
         )
 
         save_model_info(run.info.run_id, "lgbm_model", "experiment_info.json")

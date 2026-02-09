@@ -66,14 +66,14 @@ def preprocess_comment(comment: str) -> str:
 # -------------------------
 # MLflow loader
 # -------------------------
-def load_model_and_vectorizer(model_name, model_version, vectorizer_path):
+def load_model_and_vectorizer(model_name, model_alias, vectorizer_path):
     mlflow.set_tracking_uri(
         "https://dagshub.com/Pranay5519/yt-comment-sentiment-analysis-2.mlflow"
     )
 
     client = MlflowClient()
 
-    model_uri = f"models:/{model_name}/{model_version}"
+    model_uri = f"models:/{model_name}@{model_alias}"
     model = mlflow.lightgbm.load_model(model_uri)
 
     vectorizer = joblib.load(vectorizer_path)
@@ -87,8 +87,8 @@ def load_artifacts_once():
 
     if model is None or vectorizer is None:
         model, vectorizer = load_model_and_vectorizer(
-            "ligbm_model_v1",
-            "1",
+            "light_gbm_model",
+            "production",
             "./tfidf_vectorizer.pkl"
         )
 # -------------------------

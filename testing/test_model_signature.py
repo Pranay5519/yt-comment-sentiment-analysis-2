@@ -8,7 +8,7 @@ mlflow.set_tracking_uri("https://dagshub.com/Pranay5519/yt-comment-sentiment-ana
 
 
 @pytest.mark.parametrize("model_name, alias, vectorizer_path", [
-    ("LIGHT_GBM_MODEL", "staging", "tfidf_vectorizer.pkl"), 
+    ("light_gbm_model", "staging", "tfidf_vectorizer.pkl"), 
 ])
 def test_model_with_vectorizer(model_name , alias ,vectorizer_path):
     client = MlflowClient()

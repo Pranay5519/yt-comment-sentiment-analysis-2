@@ -16,7 +16,7 @@ def promote_staging_to_production(model_name: str):
     mlflow.set_tracking_uri("https://dagshub.com/Pranay5519/yt-comment-sentiment-analysis-2.mlflow")
 
 
-    client = MlflowClient()
+    client = MlflowClient(tracking_uri= "https://dagshub.com/Pranay5519/yt-comment-sentiment-analysis-2.mlflow")
 
     try:
         # Get current production and archive it
@@ -55,4 +55,4 @@ def promote_staging_to_production(model_name: str):
 
 
 # Usage
-promote_staging_to_production("ligbm_model_v1")
+promote_staging_to_production("light_gbm_model")
