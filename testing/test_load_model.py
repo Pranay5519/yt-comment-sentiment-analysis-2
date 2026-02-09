@@ -11,7 +11,7 @@ from mlflow.tracking import MlflowClient
 mlflow.set_tracking_uri("https://dagshub.com/Pranay5519/yt-comment-sentiment-analysis-2.mlflow")
 
 @pytest.mark.parametrize("model_name, alias", [
-    ("LIGHT_GBM_MODEL", "staging"),
+    ("ligbm_model_v1", "staging"),
 ])
 def test_load_latest_staging_model(model_name, alias):
     client = MlflowClient()
@@ -23,7 +23,7 @@ def test_load_latest_staging_model(model_name, alias):
         model_uri = f"models:/{model_name}@{alias}"
         
         # 2. Use pyfunc for better compatibility with remote storage
-        model = mlflow.pyfunc.load_model(model_uri)
+        model = mlflow.lightgbm.load_model(model_uri)
 
         assert model is not None
         print(f"Version {version_details.version} loaded successfully.")

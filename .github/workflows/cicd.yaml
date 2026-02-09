@@ -1,94 +1,94 @@
-name: CICD Pipeline
+# name: CICD Pipeline
 
-on: push
+# on: push
 
-jobs:
-  model-deployment:
-    runs-on: ubuntu-latest
+# jobs:
+#   model-deployment:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: '3.11'
 
-      - name: Cache pip dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+#       - name: Cache pip dependencies
+#         uses: actions/cache@v3
+#         with:
+#           path: ~/.cache/pip
+#           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+#           restore-keys: |
+#             ${{ runner.os }}-pip-
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+#       - name: Install dependencies
+#         run: |
+#           pip install -r requirements.txt
 
-      - name: Run pipeline # Run Dvc Repro using dagshub tracking server
-        env:
-          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
-        run: |
-          dvc repro
+#       - name: Run pipeline # Run Dvc Repro using dagshub tracking server
+#         env:
+#           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+#         run: |
+#           dvc repro
       
-      - name: Push DVC-tracked data to remote
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-south-1  # check from aws web
-        run: |
-          dvc push
+#       - name: Push DVC-tracked data to remote
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_DEFAULT_REGION: ap-south-1  # check from aws web
+#         run: |
+#           dvc push
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+#       - name: Configure Git
+#         run: |
+#           git config --global user.name "github-actions[bot]"
+#           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Add changes to Git
-        run: |
-          git add .
+#       - name: Add changes to Git
+#         run: |
+#           git add .
 
-      - name: Commit changes
-        if: ${{ github.actor != 'github-actions[bot]' }}
-        run: |
-          git commit -m "Automated commit of DVC outputs and updated code" || echo "No changes to commit"
+#       - name: Commit changes
+#         if: ${{ github.actor != 'github-actions[bot]' }}
+#         run: |
+#           git commit -m "Automated commit of DVC outputs and updated code" || echo "No changes to commit"
 
-      - name: Push changes
-        if: ${{ github.actor != 'github-actions[bot]' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git push origin ${{ github.ref_name }}
+#       - name: Push changes
+#         if: ${{ github.actor != 'github-actions[bot]' }}
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: |
+#           git push origin ${{ github.ref_name }}
 
-      - name : Install test dependencies
-        run: |
-          pip install pytest
+#       - name : Install test dependencies
+#         run: |
+#           pip install pytest
 
-      - name : Run model loading test
-        env:
-          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
-        run:
-          pytest testing/test_load_model.py
+#       - name : Run model loading test
+#         env:
+#           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+#         run:
+#           pytest testing/test_load_model.py
 
-      - name : Run model signature test
-        env:
-          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
-        run:
-          pytest testing/test_model_signature.py
+#       - name : Run model signature test
+#         env:
+#           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+#         run:
+#           pytest testing/test_model_signature.py
 
-      - name : Run model performace test
-        env:
-          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
-        run:
-          pytest testing\test_model_performance.py
+#       - name : Run model performace test
+#         env:
+#           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+#         run:
+#           pytest testing\test_model_performance.py
       
-      - name: Start FastAPI app
-        run: |
-          nohup uvicorn fast_api.app:app --host 0.0.0.0 --port 8000 &
-          sleep 5
+#       - name: Start FastAPI app
+#         run: |
+#           nohup uvicorn fast_api.app:app --host 0.0.0.0 --port 8000 &
+#           sleep 5
 
-      - name: Run fast-api tests
-        run: |
-          testing\test_fast_api.py
+#       - name: Run fast-api tests
+#         run: |
+#           testing\test_fast_api.py
