@@ -82,7 +82,7 @@ jobs:
         env:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run:
-          pytest testing\test_model_performance.py
+          pytest testing/test_model_performance.py
       
       - name: Start FastAPI app
         run: |
@@ -91,4 +91,4 @@ jobs:
 
       - name: Run fast-api tests
         run: |
-          testing\test_fast_api.py
+          testing/test_fast_api.py
