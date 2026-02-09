@@ -83,6 +83,12 @@ jobs:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run:
           pytest testing/test_model_performance.py
+
+      - name: Promote model to production
+        if: success()
+        env:
+          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+        run: python scripts/promote_model.py
       
       - name: Start FastAPI app
         run: |
