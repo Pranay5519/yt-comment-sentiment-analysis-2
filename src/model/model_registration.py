@@ -99,13 +99,11 @@ def register_logged_model(model_name: str, model_info: dict):
 
     except Exception as e:
         logger.error('Registration / aliasing failed: %s', e)
-        raise
-
-    
+        raise    
     
 def main():
     try:
-        model_info_path = r'D:\yt-comment-sentiment-analysis2\experiment_info.json'
+        model_info_path = 'experiment_info.json'
         model_info = load_model_info(model_info_path)
         
         model_name = "light_gbm_model"

@@ -160,7 +160,7 @@ def main():
             model.predict(input_example)
         )
 
-        mlflow.lightgbm.log_model(
+        mlflow.lightgbm.log_model( 
             model,
             #name="model-light-gbm",
             signature=signature,
