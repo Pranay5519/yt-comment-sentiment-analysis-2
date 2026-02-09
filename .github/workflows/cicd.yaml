@@ -91,4 +91,4 @@ jobs:
 
       - name: Run fast-api tests
         run: |
-          testing/test_fast_api.py
+          pytest testing/test_fast_api.py
