@@ -126,7 +126,7 @@ def get_root_directory() -> str:
 
 def main():
     try:
-        # Get root directory and resolve the path for params.yaml
+        # Get root  directory and resolve the path for params.yaml
         root_dir = get_root_directory()
 
         # Load parameters from the root directory

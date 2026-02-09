@@ -13,7 +13,7 @@ import json
 from mlflow.models import infer_signature
 #import dagshub
 from dotenv import load_dotenv
-import logging   # 🔴 added
+import logging   #
 
 # -------------------- LOGGING SETUP --------------------
 logger = logging.getLogger("model_evaluation")
@@ -45,7 +45,7 @@ if not dagshub_token:
     logger.error("DAGSHUB_PAT environment variable is not set")
     raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
 
-os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_USERNAME"] = "Pranay5519"
 os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
 mlflow.set_tracking_uri(
@@ -129,7 +129,7 @@ dataset = mlflow.data.from_pandas(test_data, name="evaluation_set")
 
 def main():
     logger.info("Starting MLflow evaluation run")
-    mlflow.set_experiment("dvc-pipeline-1")
+    mlflow.set_experiment("dvc-pipeline-2")
 
     with mlflow.start_run() as run:
         logger.info(f"MLflow run started: {run.info.run_id}")
