@@ -90,11 +90,24 @@ jobs:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: python testing/promote_model.py
       
-      - name: Start FastAPI app
+      - name: Login to AWS ECR
+        if: success()
         run: |
-          nohup uvicorn fast_api.app:app --host 0.0.0.0 --port 8000 &
-          sleep 5
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 581807542154.dkr.ecr.ap-south-1.amazonaws.com
 
-      - name: Run fast-api tests
+      - name: Build Docker image
+        if: success()
         run: |
-          pytest testing/test_fast_api.py
+          docker build -t yt-comment-app .
+
+      - name: Tag Docker image
+        if: success()
+        run: |
+          docker tag yt-comment-app:latest 581807542154.dkr.ecr.ap-south-1.amazonaws.com/yt-comment-app:latest
+
+      - name: Push Docker image to AWS ECR
+        if: success()
+        run: |
+          docker push 581807542154.dkr.ecr.ap-south-1.amazonaws.com/yt-comment-app:latest
