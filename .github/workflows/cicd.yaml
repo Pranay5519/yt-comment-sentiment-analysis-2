@@ -133,7 +133,7 @@ jobs:
           aws deploy create-deployment \
             --application-name yt-sentiment-analysis \
             --deployment-config-name CodeDeployDefault.OneAtATime \
-            --deployment-group-name yt-sentiment-analysis-group \
+            --deployment-group-name yt-sentiment-analysis-2 \
             --s3-location bucket=ytcodedeploybucketpsg,key=deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
             --region ap-south-1
