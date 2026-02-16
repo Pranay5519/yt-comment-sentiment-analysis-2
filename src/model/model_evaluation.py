@@ -4,7 +4,7 @@ import pickle
 import yaml
 import mlflow
 import mlflow.sklearn
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix , accuracy_score
 from sklearn.feature_extraction.text import TfidfVectorizer
 import os
 import matplotlib.pyplot as plt
@@ -85,8 +85,8 @@ def evaluate_model(model, X_test: pd.DataFrame, y_test: np.ndarray):
     y_pred = model.predict(X_test)
     report = classification_report(y_test, y_pred, output_dict=True)
     cm = confusion_matrix(y_test, y_pred)
-    return report, cm
-
+    accuracy = accuracy_score(y_test , y_pred)
+    return report, cm , accuracy
 
 def log_confusion_matrix(cm, dataset_name):
     logger.info("Logging confusion matrix")
@@ -178,8 +178,8 @@ def main():
 
         mlflow.log_input(dataset, context="evaluation")
 
-        report, cm = evaluate_model(model, X_test_df, y_test)
-
+        report, cm , accuracy = evaluate_model(model, X_test_df, y_test)
+        mlflow.log_metrics({"accuracy" : accuracy})
         for label, metrics in report.items():
             if isinstance(metrics, dict):
                 mlflow.log_metrics({
@@ -189,7 +189,7 @@ def main():
                 })
 
         log_confusion_matrix(cm, "Test Data")
-
+        
         mlflow.set_tag("model_type", "LightGBM")
         mlflow.set_tag("task", "Sentiment Analysis")
         mlflow.set_tag("dataset", "YouTube Comments")
