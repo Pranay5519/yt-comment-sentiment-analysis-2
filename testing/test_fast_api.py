@@ -16,7 +16,7 @@ BASE_URL = "http://localhost:8000"
 #     url = f"{BASE_URL}/fetch_comments"
 #     response = requests.post(url, json=payload)
 
-#     assert response.status_code == 200
+#     assert response.sta tus_code == 200
 
 #     data = response.json()
 #     assert isinstance(data, list)
