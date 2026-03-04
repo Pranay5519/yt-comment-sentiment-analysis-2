@@ -10,5 +10,9 @@ matplotlib
 seaborn
 wordcloud 
 dvc-s3
+langchain
+langgraph
+langchain-google-genai
+python-dotenv
 #dagshub
 #; platform_system == "Windows"

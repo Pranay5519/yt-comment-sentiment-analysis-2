@@ -1,0 +1,19 @@
+src/
+    data/
+        .gitkeep
+        data_ingestion.py
+        data_preprocessing.py
+        __init__.py
+    features/
+        .gitkeep
+        __init__.py
+    model/
+        .gitkeep
+        model_building.py
+        model_evaluation.py
+        model_registration.py
+        __init__.py
+    visualization/
+        .gitkeep
+        __init__.py
+    __init__.py

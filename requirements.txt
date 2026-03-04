@@ -37,7 +37,10 @@ antlr4-python3-runtime==4.9.3
     #   hydra-core
     #   omegaconf
 anyio==4.12.1
-    # via starlette
+    # via
+    #   google-genai
+    #   httpx
+    #   starlette
 appdirs==1.4.4
     # via iterative-telemetry
 asyncssh==2.22.0
@@ -67,7 +70,10 @@ celery==5.6.2
     #   dvc
     #   dvc-task
 certifi==2026.1.4
-    # via requests
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
 cffi==2.0.0
     # via
     #   cryptography
@@ -120,6 +126,7 @@ diskcache==5.6.3
 distro==1.9.0
     # via
     #   dvc
+    #   google-genai
     #   iterative-telemetry
 docker==7.1.0
     # via mlflow
@@ -158,6 +165,8 @@ fastapi==0.128.0
     #   mlflow-skinny
 filelock==3.20.3
     # via iterative-telemetry
+filetype==1.2.0
+    # via langchain-google-genai
 flask==3.1.2
     # via
     #   flask-cors
@@ -200,8 +209,12 @@ gitpython==3.1.46
     # via
     #   mlflow-skinny
     #   scmrepo
-google-auth==2.48.0
-    # via databricks-sdk
+google-auth[requests]==2.48.0
+    # via
+    #   databricks-sdk
+    #   google-genai
+google-genai==1.65.0
+    # via langchain-google-genai
 grandalf==0.8
     # via dvc
 graphene==3.4.3
@@ -217,7 +230,16 @@ greenlet==3.3.1
 gto==1.9.0
     # via dvc
 h11==0.16.0
-    # via uvicorn
+    # via
+    #   httpcore
+    #   uvicorn
+httpcore==1.0.9
+    # via httpx
+httpx==0.28.1
+    # via
+    #   google-genai
+    #   langgraph-sdk
+    #   langsmith
 huey==2.6.0
     # via mlflow
 hydra-core==1.3.2
@@ -225,6 +247,7 @@ hydra-core==1.3.2
 idna==3.11
     # via
     #   anyio
+    #   httpx
     #   requests
     #   yarl
 importlib-metadata==8.7.1
@@ -245,6 +268,10 @@ joblib==1.5.3
     # via
     #   nltk
     #   scikit-learn
+jsonpatch==1.33
+    # via langchain-core
+jsonpointer==3.0.0
+    # via jsonpatch
 kiwisolver==1.4.9
     # via matplotlib
 kombu==5.6.2
@@ -252,6 +279,31 @@ kombu==5.6.2
     #   celery
     #   dvc
     #   dvc-task
+langchain==1.2.10
+    # via -r requirements.in
+langchain-core==1.2.17
+    # via
+    #   langchain
+    #   langchain-google-genai
+    #   langgraph
+    #   langgraph-checkpoint
+    #   langgraph-prebuilt
+langchain-google-genai==4.2.1
+    # via -r requirements.in
+langgraph==1.0.10
+    # via
+    #   -r requirements.in
+    #   langchain
+langgraph-checkpoint==4.0.1
+    # via
+    #   langgraph
+    #   langgraph-prebuilt
+langgraph-prebuilt==1.0.8
+    # via langgraph
+langgraph-sdk==0.3.9
+    # via langgraph
+langsmith==0.7.11
+    # via langchain-core
 lightgbm==4.6.0
     # via -r requirements.in
 mako==1.3.10
@@ -323,12 +375,18 @@ opentelemetry-semantic-conventions==0.60b1
 orjson==3.11.7
     # via
     #   dvc-data
+    #   langgraph-sdk
+    #   langsmith
     #   sqltrie
+ormsgpack==1.12.2
+    # via langgraph-checkpoint
 packaging==25.0
     # via
     #   dvc
     #   hydra-core
     #   kombu
+    #   langchain-core
+    #   langsmith
     #   matplotlib
     #   mlflow-skinny
     #   mlflow-tracing
@@ -379,7 +437,13 @@ pycparser==3.0
 pydantic==2.12.5
     # via
     #   fastapi
+    #   google-genai
     #   gto
+    #   langchain
+    #   langchain-core
+    #   langchain-google-genai
+    #   langgraph
+    #   langsmith
     #   mlflow-skinny
     #   mlflow-tracing
     #   pydantic-settings
@@ -415,6 +479,7 @@ python-dateutil==2.9.0.post0
     #   pandas
 python-dotenv==1.2.1
     # via
+    #   -r requirements.in
     #   mlflow-skinny
     #   pydantic-settings
 pytz==2025.2
@@ -425,6 +490,7 @@ pywin32==311 ; platform_system == "Windows"
     #   dvc-task
 pyyaml==6.0.3
     # via
+    #   langchain-core
     #   mlflow-skinny
     #   omegaconf
 regex==2026.1.15
@@ -435,8 +501,14 @@ requests==2.32.5
     #   docker
     #   dvc
     #   dvc-studio-client
+    #   google-auth
+    #   google-genai
     #   iterative-telemetry
+    #   langsmith
     #   mlflow-skinny
+    #   requests-toolbelt
+requests-toolbelt==1.0.0
+    # via langsmith
 rich==14.3.2
     # via
     #   dvc
@@ -485,6 +557,8 @@ skops==0.13.0
     # via mlflow
 smmap==5.0.2
     # via gitdb
+sniffio==1.3.1
+    # via google-genai
 sqlalchemy==2.0.46
     # via
     #   alembic
@@ -499,6 +573,10 @@ tabulate==0.9.0
     # via
     #   dvc
     #   gto
+tenacity==9.1.4
+    # via
+    #   google-genai
+    #   langchain-core
 threadpoolctl==3.6.0
     # via scikit-learn
 tomlkit==0.14.0
@@ -520,7 +598,9 @@ typing-extensions==4.15.0
     #   asyncssh
     #   dulwich
     #   fastapi
+    #   google-genai
     #   graphene
+    #   langchain-core
     #   mlflow-skinny
     #   opentelemetry-api
     #   opentelemetry-sdk
@@ -548,6 +628,10 @@ urllib3==2.6.3
     #   docker
     #   dulwich
     #   requests
+uuid-utils==0.14.1
+    # via
+    #   langchain-core
+    #   langsmith
 uvicorn==0.40.0
     # via mlflow-skinny
 vine==5.1.0
@@ -565,6 +649,8 @@ wcwidth==0.5.3
     # via
     #   prettytable
     #   prompt-toolkit
+websockets==16.0
+    # via google-genai
 werkzeug==3.1.5
     # via
     #   flask
@@ -573,12 +659,18 @@ wordcloud==1.9.6
     # via -r requirements.in
 wrapt==2.1.1
     # via aiobotocore
+xxhash==3.6.0
+    # via
+    #   langgraph
+    #   langsmith
 yarl==1.22.0
     # via aiohttp
 zc-lockfile==4.0
     # via dvc
 zipp==3.23.0
     # via importlib-metadata
+zstandard==0.25.0
+    # via langsmith
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
