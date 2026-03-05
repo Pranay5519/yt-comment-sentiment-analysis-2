@@ -19,6 +19,9 @@ from nltk.stem import WordNetLemmatizer
 from mlflow.tracking import MlflowClient
 import matplotlib.dates as mdates
 import nltk
+from src.comments_classification.schemas import TopicState
+from src.comments_classification.topic_nodes import discover_topics, classify_comments
+from src.comments_classification.graph import topic_graph
 #nltk.download('stopwords')
 from datetime import datetime   
 app = FastAPI()
@@ -468,3 +471,13 @@ def generate_trend_graph(req: TrendGraphRequest):
             status_code=500,
             detail=f"Trend graph generation failed: {str(e)}"
         )
+        
+        
+@app.post("/topics")
+def topic_classification(comments: List[str]):
+    result = topic_graph.invoke({
+        "comments": comments,
+        "topics": [],
+        "classified_comments": []
+    })
+    return result

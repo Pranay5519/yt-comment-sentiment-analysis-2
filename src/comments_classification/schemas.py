@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import TypedDict, List
 
-
 class TopicState(TypedDict):
     comments: List[str]
     topics: List[str]
