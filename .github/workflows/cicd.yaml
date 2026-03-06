@@ -90,6 +90,10 @@ jobs:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: python testing/promote_model.py
 
+      - name: Start FastAPI server
+        run: |
+          uvicorn fast_api.app:app --host 0.0.0.0 --port 8000 &
+          
       - name : Run comments classification test (LLM)
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
