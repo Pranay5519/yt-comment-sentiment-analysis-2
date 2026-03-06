@@ -1,4 +1,8 @@
 src/
+    comments_classification/
+        graph.py
+        schemas.py
+        topic_nodes.py
     data/
         .gitkeep
         data_ingestion.py

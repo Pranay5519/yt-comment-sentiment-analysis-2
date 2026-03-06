@@ -89,28 +89,34 @@ jobs:
         env:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: python testing/promote_model.py
+
+      - name : Run comments classification test (LLM)
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: |
+          pytest testing/test_topic_endpoint.py
       
-      - name: Login to AWS ECR
-        if: success()
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 581807542154.dkr.ecr.ap-south-1.amazonaws.com
+      # - name: Login to AWS ECR
+      #   if: success()
+      #   run: |
+      #     aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 581807542154.dkr.ecr.ap-south-1.amazonaws.com
 
-      - name: Build Docker image
-        if: success()
-        run: |
-          docker build -t yt-comment-app .
+      # - name: Build Docker image
+      #   if: success()
+      #   run: |
+      #     docker build -t yt-comment-app .
 
-      - name: Tag Docker image
-        if: success()
-        run: |
-          docker tag yt-comment-app:latest 581807542154.dkr.ecr.ap-south-1.amazonaws.com/yt-comment-app:latest
+      # - name: Tag Docker image
+      #   if: success()
+      #   run: |
+      #     docker tag yt-comment-app:latest 581807542154.dkr.ecr.ap-south-1.amazonaws.com/yt-comment-app:latest
 
-      - name: Push Docker image to AWS ECR
-        if: success()
-        run: |
-          docker push 581807542154.dkr.ecr.ap-south-1.amazonaws.com/yt-comment-app:latest
+      # - name: Push Docker image to AWS ECR
+      #   if: success()
+      #   run: |
+      #     docker push 581807542154.dkr.ecr.ap-south-1.amazonaws.com/yt-comment-app:latest
     
       # # Zip the required files
       # - name: Zip files for deployment

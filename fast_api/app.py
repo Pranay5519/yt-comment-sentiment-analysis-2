@@ -19,9 +19,8 @@ from nltk.stem import WordNetLemmatizer
 from mlflow.tracking import MlflowClient
 import matplotlib.dates as mdates
 import nltk
-from src.comments_classification.schemas import TopicState
-from src.comments_classification.topic_nodes import discover_topics, classify_comments
-from src.comments_classification.graph import topic_graph
+from src.comments_classification.graph import TopicClassifier
+
 #nltk.download('stopwords')
 from datetime import datetime   
 app = FastAPI()
@@ -149,7 +148,7 @@ def fetch_comments_api(req: FetchCommentsRequest):
             params = {
                 "part": "snippet",
                 "videoId": req.video_id,
-                "maxResults": 100,
+                "maxResults": req.max_comments,
                 "pageToken": page_token,
                 "key": req.api_key
             }
@@ -473,11 +472,30 @@ def generate_trend_graph(req: TrendGraphRequest):
         )
         
         
+ # Comments Classification
+
+
+class TopicRequest(BaseModel):
+    comments: List[dict]
+    api_key: str
+    model_name: str = "gemini-2.5-flash"
+    temperature: float = 0.0
+    
 @app.post("/topics")
-def topic_classification(comments: List[str]):
+def topic_classification(request: TopicRequest):
+    list_of_comments = [c["text"] for c in request.comments]
+    classifier = TopicClassifier(
+        api_key=request.api_key,
+        model_name=request.model_name,
+        temperature=request.temperature
+    )
+
+    topic_graph = classifier.graph()
+
     result = topic_graph.invoke({
-        "comments": comments,
+        "comments": list_of_comments,
         "topics": [],
         "classified_comments": []
     })
+
     return result
