@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
-from typing import List, Dict, Any
+from typing import List, Dict, Any , Optional
 import io
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
@@ -480,22 +480,30 @@ class TopicRequest(BaseModel):
     api_key: str
     model_name: str = "gemini-2.5-flash"
     temperature: float = 0.0
-    
+    user_topics: Optional[List[str]] = None
+    generate_topic_summary: bool = False
+
+
 @app.post("/topics")
 def topic_classification(request: TopicRequest):
+
+    # Extract comment text
     list_of_comments = [c["text"] for c in request.comments]
+    print("--initializing Classifier--")
+    # Initialize classifier
     classifier = TopicClassifier(
         api_key=request.api_key,
         model_name=request.model_name,
         temperature=request.temperature
     )
-
+    # Compile graph
     topic_graph = classifier.graph()
-
+    print("---running agent---")
+    # Run pipeline
     result = topic_graph.invoke({
         "comments": list_of_comments,
-        "topics": [],
-        "classified_comments": []
+        "user_topics": request.user_topics or [],
+        "generate_topic_summary": request.generate_topic_summary
     })
 
     return result
