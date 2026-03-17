@@ -14,5 +14,6 @@ langchain
 langgraph
 langchain-google-genai
 python-dotenv
+prometheus-client
 #dagshub
 #; platform_system == "Windows"

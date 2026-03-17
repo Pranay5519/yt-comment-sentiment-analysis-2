@@ -408,6 +408,8 @@ platformdirs==4.5.1
     # via dvc
 prettytable==3.17.0
     # via skops
+prometheus-client==0.24.1
+    # via -r requirements.in
 prompt-toolkit==3.0.52
     # via click-repl
 propcache==0.4.1

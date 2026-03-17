@@ -47,7 +47,6 @@ def test_model_performance(model_name, alias, holdout_data_path, vectorizer_path
         recall_new = recall_score(y_holdout, y_pred_new, average='weighted', zero_division=1)
         f1_new = f1_score(y_holdout, y_pred_new, average='weighted', zero_division=1)
 
-
         # Define expected thresholds for the performance metrics
         expected_accuracy = 0.40
         expected_precision = 0.40

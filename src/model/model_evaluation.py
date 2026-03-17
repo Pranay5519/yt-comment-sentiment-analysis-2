@@ -159,7 +159,7 @@ def main():
             input_example,
             model.predict(input_example)
         )
-
+    
         mlflow.lightgbm.log_model( 
             model,
             #name="model-light-gbm",

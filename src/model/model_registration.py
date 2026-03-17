@@ -18,7 +18,6 @@ console_handler.setLevel('DEBUG')
 file_handler = logging.FileHandler('model_registration_errors.log')
 file_handler.setLevel('ERROR')
 
-
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 console_handler.setFormatter(formatter)
 file_handler.setFormatter(formatter)

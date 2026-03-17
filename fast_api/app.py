@@ -20,12 +20,18 @@ from mlflow.tracking import MlflowClient
 import matplotlib.dates as mdates
 import nltk
 from src.comments_classification.graph import TopicClassifier
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST , Summary
+from fastapi import Response, Request
+import time
+
 
 #nltk.download('stopwords')
+
 from datetime import datetime   
 app = FastAPI()
 model = None
 vectorizer = None
+
 # -------------------------
 # CORS
 # -------------------------
@@ -123,6 +129,37 @@ class FetchCommentsRequest(BaseModel):
     video_id: str
     api_key: str
     max_comments: int = 2000
+    
+#--------------------------
+# Prometheus metrics
+#--------------------------
+REQUEST_LATENCY = Summary(
+    "prediction_latency_seconds",
+    "Latency of prediction request"
+)
+
+INPUT_TOKENS = Counter(
+    "input_tokens_total",
+    "Total tokens processed"
+)
+
+POSITIVE_COUNTER = Counter(
+    "positive_predictions_total",
+    "Total positive predictions"
+)
+
+NEGATIVE_COUNTER = Counter(
+    "negative_predictions_total",
+    "Total negative predictions"
+)
+NEUTRAL_COUNTER = Counter(
+    "neutral_predictions_total",
+    "Total negative predictions"
+)
+@app.get("/metrics")
+def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
 # -------------------------
 # Routes
 # -------------------------
@@ -193,7 +230,7 @@ def fetch_comments_api(req: FetchCommentsRequest):
 # -------------------------
 @app.post("/predict")
 def predict(comments: PredictRequest):
-    
+    start_time = time.time()
     if not comments:
         raise HTTPException(status_code=400, detail="No comments provided")
 
@@ -203,45 +240,48 @@ def predict(comments: PredictRequest):
             preprocess_comment(c.text) for c in comments.comments
         ]
         print("preprocessing Done")
+        
+        tokens = sum(len(x) for x in preprocessed_comments)
+        INPUT_TOKENS.inc(tokens)
+        
         # Vectorize comments (sparse matrix)
         transformed_comments = vectorizer.transform(preprocessed_comments)
         print("Transformation Done")
 
-        # Get expected schema columns from MLflow model
-        #input_schema = model.metadata.get_input_schema()
-        #expected_columns = input_schema.input_names()
-
-        # Convert sparse matrix to DataFrame with vectorizer features
         feature_names = vectorizer.get_feature_names_out()
         df = pd.DataFrame(
                     transformed_comments.toarray(),
                     columns=feature_names
                 )
         print("Data Frame Generated")
-# 🔥 correct alignment for MLflow
-        #df = df.reindex(columns=expected_columns, fill_value=0.0)
-        ## Reorder columns exactly as model expects
-        #df = df[expected_columns]
 
         # Make predictions
         predictions = model.predict(df).tolist()
         # Convert predictions to strings
         predictions = [str(pred) for pred in predictions]
         print("predictions : ", predictions)
-
+        for pred in predictions:
+            if pred == "1":
+                POSITIVE_COUNTER.inc()
+            elif pred == "-1":
+                NEGATIVE_COUNTER.inc()
+            else:
+                NEUTRAL_COUNTER.inc()       
+        
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=f"Prediction failed: {str(e)}"
         )
+    
 
     # Return response (same structure as Flask)
     response = [
         {"comment": comment, "sentiment": sentiment}
         for comment, sentiment in zip(comments.comments, predictions)
     ]
-
-    return response # also return prediction for streamlit 
+    REQUEST_LATENCY.observe(time.time() - start_time)
+    return response
 # -------------------------
 # /predict_with_timestamps
 # -------------------------
